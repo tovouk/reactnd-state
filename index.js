@@ -59,8 +59,15 @@ function goals (state = [], action){
             return state
     }
 }
+//reducer can handle other reducers
+function app(state = {},action) {
+    return {
+        todos: todos(state.todos,action),
+        goals: goals(state.goals, action)
+    }
+}
 
-const store = createStore(todos)
+const store = createStore(app)
 store.subscribe(()=>{
     console.log('The new state is: ', store.getState())
 })
@@ -71,4 +78,46 @@ store.dispatch({
         name: 'Learn Redux',
         complete: false
     }
+})
+store.dispatch({
+    type: 'ADD_TODO',
+    todo:{
+        id: 1,
+        name: 'Tie my shoes',
+        complete: false
+    }
+})
+store.dispatch({
+    type: 'ADD_TODO',
+    todo:{
+        id: 2,
+        name: 'Read a book',
+        complete: false
+    }
+})
+store.dispatch({
+    type: 'REMOVE_TODO',
+    id: 1
+})
+store.dispatch({
+    type: 'TOGGLE_TODO',
+    id: 2
+})
+store.dispatch({
+    type: 'ADD_GOAL',
+    goal:{
+        id: 0,
+        name: 'Be cool'
+    }
+})
+store.dispatch({
+    type: 'ADD_GOAL',
+    goal:{
+        id: 0,
+        name: 'Be awesome'
+    }
+})
+store.dispatch({
+    type: 'REMOVE_GOAL',
+    id: 0
 })
