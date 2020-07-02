@@ -1,12 +1,5 @@
-function todos (state = [], action) {
-    if(action.type === 'ADD_TODO'){
-        return state.concat([action.todo])
-    }
-
-    return state
-}
-
-function createStore() {
+//Library code
+function createStore(reducer) {
     /*
     Store should have the following
     1. A State
@@ -27,9 +20,23 @@ function createStore() {
         }
     }
 
+    const dispatch = (action) => {
+        state = reducer(state, action)
+        listeners.forEach((listener)=> listener())
+    }
+
     return {
         getState,
         subscribe
     }
 
+}
+
+//App code
+function todos (state = [], action) {
+    if(action.type === 'ADD_TODO'){
+        return state.concat([action.todo])
+    }
+
+    return state
 }
