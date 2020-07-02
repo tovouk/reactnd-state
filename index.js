@@ -40,6 +40,42 @@ const TOGGLE_TODO = 'TOGGLE_TODO'
 const ADD_GOAL = 'ADD_GOAL'
 const REMOVE_GOAL = 'REMOVE_GOAL'
 
+//action creators
+function addTodoAction (todo) {
+    return {
+        type: ADD_TODO,
+        todo
+    }
+}
+
+function removeTodoAction (id) {
+    return {
+        type: REMOVE_TODO,
+        id
+    }
+}
+
+function toggleTodoAction (id) {
+    return {
+        type: TOGGLE_TODO,
+        id
+    }
+}
+
+function addGoalAction (goal) {
+    return {
+        type: ADD_TODO,
+        goal
+    }
+}
+
+function removeGoalAction (id) {
+    return {
+        type: REMOVE_GOAL,
+        id
+    }
+}
+
 //to-dos reducer
 function todos (state = [], action) { 
     switch(action.type){
@@ -71,62 +107,37 @@ function app(state = {},action) {
         goals: goals(state.goals, action)
     }
 }
-/*
 
-Use the below to test this store
+
+//Use the below to test this store
 
 const store = createStore(app)
 store.subscribe(()=>{
     console.log('The new state is: ', store.getState())
 })
-store.dispatch({
-    type: ADD_TODO,
-    todo:{
-        id: 0,
-        name: 'Learn Redux',
-        complete: false
-    }
-})
-store.dispatch({
-    type: ADD_TODO,
-    todo:{
-        id: 1,
-        name: 'Tie my shoes',
-        complete: false
-    }
-})
-store.dispatch({
-    type: ADD_TODO,
-    todo:{
-        id: 2,
-        name: 'Read a book',
-        complete: false
-    }
-})
-store.dispatch({
-    type: REMOVE_TODO,
-    id: 1
-})
-store.dispatch({
-    type: TOGGLE_TODO,
-    id: 2
-})
-store.dispatch({
-    type: ADD_GOAL,
-    goal:{
-        id: 0,
-        name: 'Be cool'
-    }
-})
-store.dispatch({
-    type: ADD_GOAL,
-    goal:{
-        id: 0,
-        name: 'Be awesome'
-    }
-})
-store.dispatch({
-    type: REMOVE_GOAL,
-    id: 0
-})
-*/
+store.dispatch(addTodoAction({
+    id: 0,
+    name: 'Learn Redux',
+    complete: false
+}))
+store.dispatch(addTodoAction({
+    id: 1,
+    name: 'Tie my shoes',
+    complete: false
+}))
+store.dispatch(addTodoAction({
+    id: 2,
+    name: 'Read a book',
+    complete: false
+}))
+store.dispatch(removeTodoAction(1))
+store.dispatch(toggleTodoAction(2))
+store.dispatch(addGoalAction({
+    id: 0,
+    name: 'Be cool'
+}))
+store.dispatch(addGoalAction({
+    id: 1,
+    name: 'Be awesome'
+}))
+store.dispatch(removeGoalAction(0))
