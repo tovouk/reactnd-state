@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Udacity Todos Goals</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js"></script>
     </head>
     <body>
         <div>
@@ -20,41 +21,6 @@
             
             function generateId () {
                 return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36)
-            }
-            //Library code
-            function createStore(reducer) {
-
-                /*
-                Store should have the following
-                1. A State
-                2. A way to get the state
-                3. A way to listen to changes to the state
-                4. A way to update the state
-                */
-
-                let state
-                let listeners = []
-
-                const getState = () => state
-
-                const subscribe = (listener) => {
-                    listeners.push(listener)
-                    return () => {
-                        listeners = listeners.filter((l)=> l !== listener)
-                    }
-                }
-
-                const dispatch = (action) => {
-                    state = reducer(state, action)
-                    listeners.forEach((listener)=> listener())
-                }
-
-                return {
-                    getState,
-                    subscribe,
-                    dispatch
-                }
-
             }
 
             //App code
@@ -124,18 +90,12 @@
                         return state
                 }
             }
-            //reducer can handle other reducers
-            function app(state = {},action) {
-                return {
-                    todos: todos(state.todos,action),
-                    goals: goals(state.goals, action)
-                }
-            }
 
-
-            //Use the below to test this store
-            
-            const store = createStore(app)
+            //can combine reducers using redux for multiple types
+            const store = Redux.createStore(Redux.combineReducers({
+                todos,
+                goals
+            }))
             store.subscribe(()=>{
                 const { goals, todos } = store.getState()
 
