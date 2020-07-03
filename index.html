@@ -17,8 +17,13 @@
             <ul id="goals"></ul>
         </div>
         <script type="text/javascript">
+            
+            function generateId () {
+                return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36)
+            }
             //Library code
             function createStore(reducer) {
+
                 /*
                 Store should have the following
                 1. A State
@@ -83,7 +88,7 @@
 
             function addGoalAction (goal) {
                 return {
-                    type: ADD_TODO,
+                    type: ADD_GOAL,
                     goal
                 }
             }
@@ -129,11 +134,12 @@
 
 
             //Use the below to test this store
-
+            
             const store = createStore(app)
             store.subscribe(()=>{
                 console.log('The new state is: ', store.getState())
             })
+            /*
             store.dispatch(addTodoAction({
                 id: 0,
                 name: 'Learn Redux',
@@ -160,7 +166,32 @@
                 name: 'Be awesome'
             }))
             store.dispatch(removeGoalAction(0))
+            */
 
+            function addTodo() {
+                const input = document.getElementById('todo')
+                const name = input.value
+                input.value = ''
+                store.dispatch(addTodoAction({
+                    name,
+                    complete: false,
+                    id: generateId()
+                }))
+            }
+
+            function addGoal() {
+                const input = document.getElementById('goal')
+                const name = input.value
+                input.value = ''
+                store.dispatch(addGoalAction({
+                    name,
+                    id: generateId()
+                }))
+            }
+
+            document.getElementById('todoBtn').addEventListener('click', addTodo)
+
+            document.getElementById('goalBtn').addEventListener('click', addGoal)
         </script>
     </body>
 </html>
