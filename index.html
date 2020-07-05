@@ -95,6 +95,15 @@
                         return state
                 }
             }
+            //Loading reducer
+            function loading (state = true, action) {
+                switch(action.type) {
+                    case RECEIVE_DATA:
+                        return false
+                    default:ADD_GOAL
+                        return state
+                }
+            }
 
             //Middleware
             const checker = (store) => (next) => (action) => {
@@ -120,7 +129,8 @@
             //can combine reducers using redux for multiple types
             const store = Redux.createStore(Redux.combineReducers({
                 todos,
-                goals
+                goals,
+                loading
             }), Redux.applyMiddleware(checker,logger))
 
         </script>
@@ -221,7 +231,12 @@
 
                 render (){
                     const {store} = this.props
-                    const {todos,goals} = store.getState()
+                    const {todos,goals, loading} = store.getState()
+
+                    if(loading === true){
+                        return <h3>loading</h3>
+                    }
+
                     return (
                         <div>
                             <Todos todos={todos} store={this.props.store} />
