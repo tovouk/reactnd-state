@@ -177,6 +177,12 @@
 
                 toggleItem = (id) => {
                     this.props.store.dispatch(toggleTodoAction(id))
+
+                    return API.saveTodoToggle(id)
+                    .catch(()=> {
+                        this.props.store.dispatch(toggleTodoAction(id))
+                        alert('error toggling your todo')
+                    })
                 }
 
                 render(){
@@ -236,7 +242,6 @@
                         API.fetchGoals()
                     ]).then(([ todos, goals ]) => {
                         store.dispatch(receiveDataAction(todos,goals))
-                        console.log('Goals', goals)
                     })
                     store.subscribe(()=> this.forceUpdate())
                 }
