@@ -4,14 +4,13 @@ import ConnectedTodos from './Todos'
 import ConnectedGoals from './Goals'
 import {handleInitialData} from '../actions/shared'
 
-function App() {
-  componentDidMount(){
+class App extends React.Component {
+  componentDidMount() {
     const {dispatch} = this.props
     dispatch(handleInitialData())
   }
 
-  render (){
-
+  render () {
       if(this.props.loading === true){
           return <h3>loading</h3>
       }
